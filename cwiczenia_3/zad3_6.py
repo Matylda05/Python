@@ -1,4 +1,4 @@
-x=5 #długoś
+x=5 #szerokość
 x=x+1
 y=5 #wysokość
 L = []

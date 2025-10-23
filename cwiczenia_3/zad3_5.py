@@ -6,15 +6,15 @@ L2 =[]
 for i in range(x):
     L.append("|")
     if i != x -1:
-        L.append ("...")
+        L.append("...")
 
 
 for i in range(x):
     L2.append(i)
     if i > 9:
-        L2.append ("  ")
+        L2.append("  ")
     else:
-        L2.append ("   ")
+        L2.append("   ")
 
 result1 = "".join(L)
 result2 = "".join( str(x) for x in L2)
