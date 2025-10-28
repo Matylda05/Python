@@ -1,4 +1,4 @@
-def make_ruler(x): pass
+def make_ruler(x): 
     x=x+1
     L = []
     L2 =[]
