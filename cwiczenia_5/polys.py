@@ -51,8 +51,23 @@ def sub_poly(poly1, poly2):       # poly1(x) - poly2(x)
     return result   
 
 
+def mul_poly(poly1, poly2):        # poly1(x) * poly2(x)
+    result = []
+    poly1 = usun_zero_z_konca(poly1)
+    poly2 = usun_zero_z_konca(poly2)
+    if is_zero(poly1) or is_zero(poly2):
+        result.append(0)
+        return result
+    for i in range((len(poly1)+len(poly2))-1):
+        result.append(0)
 
-def mul_poly(poly1, poly2): pass        # poly1(x) * poly2(x)
+    for i in range(len(poly1)):
+        for j in range(len(poly2)):
+            result[i + j] = result[i + j] + (poly1[i]*poly2[j])
+
+
+    return result
+
 
 def is_zero(poly):                 # bool, [0], [0,0], itp.
 
@@ -60,6 +75,7 @@ def is_zero(poly):                 # bool, [0], [0,0], itp.
         if(poly[i] != 0):
             return False
     return True
+
 
 def eq_poly(poly1, poly2):        # bool, porównywanie poly1(x) == poly2(x)
     poly1 = usun_zero_z_konca(poly1)
@@ -147,7 +163,16 @@ class TestPolynomials(unittest.TestCase):
         self.assertEqual(sub_poly(self.p6, self.p6), [0, 0])
         self.assertEqual(sub_poly(self.p1, self.p10), [0, 1, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0])
 
-    def test_mul_poly(self): pass
+    def test_mul_poly(self): 
+        self.assertEqual(mul_poly(self.p1, self.p2), [0, 0, 0, 1])
+        self.assertEqual(mul_poly(self.p3, self.p4), [5, 16, 34, 32, 21])
+        self.assertEqual(mul_poly(self.p5, self.p1), [0])
+        self.assertEqual(mul_poly(self.p1, self.p6), [0, 0, -1])
+        self.assertEqual(mul_poly(self.p7, self.p3), [-5, -16, -34, -32, -21])
+        self.assertEqual(mul_poly(self.p4, self.p8), [1, 2, 3])
+        self.assertEqual(mul_poly(self.p8, self.p3), [5, 6, 7])
+        self.assertEqual(mul_poly(self.p1, self.p10), [0,0,0,0,0,0,0,0,0,1])
+
 
     def test_is_zero(self): 
         self.assertEqual(is_zero(self.p1), False)
