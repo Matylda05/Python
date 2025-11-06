@@ -65,7 +65,6 @@ def mul_poly(poly1, poly2):        # poly1(x) * poly2(x)
         for j in range(len(poly2)):
             result[i + j] = result[i + j] + (poly1[i]*poly2[j])
 
-
     return result
 
 
@@ -104,7 +103,23 @@ def eval_poly(poly, x0):            # poly(x0), algorytm Hornera
 
 def combine_poly(poly1, poly2): pass    # poly1(poly2(x)), trudne!
 
-def pow_poly(poly, n): pass             # poly(x) ** n
+def pow_poly(poly, n):             # poly(x) ** n
+    result = []
+    poly = usun_zero_z_konca(poly)
+    if n == 0:
+        result.append(1)
+        return result
+    elif is_zero(poly):
+        result.append(0)
+        return result
+
+    result.append(1)
+    for i in range((len(poly) - 1) * n):
+        result.append(0)
+
+    for _ in range(n):
+        result = mul_poly(result, poly)
+    return result
 
 def diff_poly(poly): pass               # pochodna wielomianu
 
@@ -139,6 +154,7 @@ class TestPolynomials(unittest.TestCase):
         self.p9 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         self.p10 = [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         self.p11 = [0, 1, 0]
+        self.p12 = [1, 0, 0, 1]
 
 
 
@@ -172,7 +188,7 @@ class TestPolynomials(unittest.TestCase):
         self.assertEqual(mul_poly(self.p4, self.p8), [1, 2, 3])
         self.assertEqual(mul_poly(self.p8, self.p3), [5, 6, 7])
         self.assertEqual(mul_poly(self.p1, self.p10), [0,0,0,0,0,0,0,0,0,1])
-
+        self.assertEqual(mul_poly(self.p12, self.p1), [0, 1, 0, 0, 1])
 
     def test_is_zero(self): 
         self.assertEqual(is_zero(self.p1), False)
@@ -192,8 +208,7 @@ class TestPolynomials(unittest.TestCase):
         self.assertEqual(eq_poly(self.p10, self.p10), True)
         self.assertEqual(eq_poly(self.p9, self.p10), False)
         self.assertEqual(eq_poly(self.p1, self.p11), True)
-
-
+        
     def test_eval_poly(self): 
         self.assertEqual(eval_poly(self.p1, 1), 1)
         self.assertEqual(eval_poly(self.p2, 2), 4)
@@ -208,7 +223,25 @@ class TestPolynomials(unittest.TestCase):
 
     def test_combine_poly(self): pass
 
-    def test_pow_poly(self): pass
+    def test_pow_poly(self):
+        self.assertEqual(pow_poly(self.p5, 0), [1])
+        self.assertEqual(pow_poly(self.p5, 3), [0])
+        self.assertEqual(pow_poly(self.p8, 5), [1])
+        self.assertEqual(pow_poly(self.p1, 3), [0, 0, 0, 1])
+        self.assertEqual(pow_poly(self.p1, 1), [0, 1])
+        self.assertEqual(pow_poly(self.p1, 0), [1])
+        self.assertEqual(pow_poly(self.p2, 3), [0, 0, 0, 0, 0, 0, 1])
+        self.assertEqual(pow_poly(self.p6, 2), [0, 0, 1])
+        self.assertEqual(pow_poly(self.p6, 3), [0, 0, 0, -1])
+        self.assertEqual(pow_poly([-1], 3), [-1])
+        self.assertEqual(pow_poly([-1], 4), [1])
+        self.assertEqual(pow_poly(self.p4, 2), [1, 4, 10, 12, 9])
+        self.assertEqual(pow_poly(self.p12, 2), [1, 0, 0, 2, 0, 0, 1])
+        self.assertEqual(pow_poly(self.p10, 2), [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1])
+        self.assertEqual(pow_poly(self.p9, 5), [0])
+        self.assertEqual(pow_poly(self.p7, 2), [1, 4, 10, 12, 9])
+        self.assertEqual(pow_poly(self.p2, 5), [0,0,0,0,0,0,0,0,0,0,1])
+
 
     def test_diff_poly(self): pass
 
