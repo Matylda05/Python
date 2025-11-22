@@ -124,7 +124,7 @@ class Triangle:
 
 import unittest
 
-class TestPoint(unittest.TestCase): 
+class TestTriangle(unittest.TestCase): 
 
     def setUp(self):
         self.t1 = Triangle(1, 1, 2, 1, 2, 2)
