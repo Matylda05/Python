@@ -50,9 +50,8 @@ class Triangle:
 
 import unittest
 
-class TestTriangle(unittest.TestCase): pass
 
-class TestPoint(unittest.TestCase): 
+class TestTriangle(unittest.TestCase): 
 
     def setUp(self):
         self.t1 = Triangle(1, 1, 2, 1, 2, 2)
@@ -74,6 +73,7 @@ class TestPoint(unittest.TestCase):
         self.t12 = Triangle(6, -3, 0, -3, 3, 6)
 
         self.t13 = Triangle(0, 0, -6, 0, -6, -3)
+        self.t14 = Triangle(-1.5, -3.0, 3, -3, 1.5, 1.5)
 
 
 
@@ -99,6 +99,8 @@ class TestPoint(unittest.TestCase):
         self.assertEqual(str(self.t8), "[(3, 3), (9, 3), (3, 9)]") 
         self.assertEqual(str(self.t12), "[(6, -3), (0, -3), (3, 6)]") 
 
+        self.assertEqual(str(self.t14), "[(-1.5, -3.0), (3, -3), (1.5, 1.5)]")
+
 
     def test__repr__(self):
         self.assertEqual(repr(self.t1), "Triangle(1, 1, 2, 1, 2, 2)") 
@@ -112,6 +114,8 @@ class TestPoint(unittest.TestCase):
 
         self.assertEqual(repr(self.t11), "Triangle(-6, -6, 0, -6, -3, 3)") 
         self.assertEqual(repr(self.t13), "Triangle(0, 0, -6, 0, -6, -3)")
+
+        self.assertEqual(repr(self.t14), "Triangle(-1.5, -3.0, 3, -3, 1.5, 1.5)")
 
 
     def test__eq__(self):
@@ -153,6 +157,8 @@ class TestPoint(unittest.TestCase):
         self.assertEqual((self.t12.center()), Point(3,0))
         self.assertEqual((self.t13.center()), Point(-4, -1))
 
+        self.assertEqual((self.t14.center()), Point(1.0, -1.5))
+
  
     def test_area(self): 
         self.assertEqual(self.t1.area(), 0.5)
@@ -168,6 +174,7 @@ class TestPoint(unittest.TestCase):
         self.assertEqual(self.t11.area(), 27)
         self.assertEqual(self.t12.area(), 27)
         self.assertEqual(self.t13.area(), 9)
+        self.assertEqual(self.t14.area(), 10.125)
 
 
     def test_move(self):
@@ -190,6 +197,8 @@ class TestPoint(unittest.TestCase):
         self.assertEqual(self.t11.move(-1, 2),Triangle(-7, -4, -1, -4, -4, 5))
         self.assertEqual(self.t12.move(0.5, -1.5),Triangle(6.5, -4.5, 0.5, -4.5, 3.5, 4.5))
         self.assertEqual(self.t13.move(7, -3),Triangle(7, -3, 1, -3, 1, -6))
+
+        self.assertEqual(self.t14.move(0.5, 2),Triangle(-1, -1.0, 3.5, -1, 2, 3.5))
 
 
     def tearDown(self): pass
