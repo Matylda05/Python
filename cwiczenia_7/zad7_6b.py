@@ -1,4 +1,3 @@
-import itertools
 import random
 
 it = (random.choice(["N", "E", "S", "W"]) for _ in iter(int, 1))
