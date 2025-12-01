@@ -73,6 +73,7 @@ class Triangle:
     def __ne__(self, other):        # obsługa tr1 != tr2
         return not self == other
 
+    @property
     def center(self):          # zwraca środek (masy) trójkąta
         x = (self.pt1.x + self.pt2.x + self.pt3.x)/3
         y = (self.pt1.y + self.pt2.y + self.pt3.y)/3
@@ -117,18 +118,61 @@ class Triangle:
             Triangle(F.x, F.y, E.x, E.y, C.x, C.y),
             Triangle(D.x, D.y, E.x, E.y, F.x, F.y)
         )
+
+    def from_points(points):
+        if not isinstance(points, (list, tuple)) or len(points) != 3:
+            raise ValueError("Element musi być listą lub krotką zawierającą trzy punkty")
+
+        p1, p2, p3 = points
+
+        if not all(isinstance(p, Point) for p in (p1, p2, p3)):
+            raise ValueError("Elementy muszą być obiektami Point")
+
+        return Triangle(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y)
+
+    @property
+    def left(self):
+        return min(self.pt1.x, self.pt2.x, self.pt3.x)
+
+    @property
+    def right(self):
+        return max(self.pt1.x, self.pt2.x, self.pt3.x)
+
+    @property
+    def top(self):
+        return min(self.pt1.y, self.pt2.y, self.pt3.y)
+
+    @property
+    def bottom(self):
+        return max(self.pt1.y, self.pt2.y, self.pt3.y)
+
+    @property
+    def width(self):
+        return self.right - self.left
+
+    @property
+    def height(self):
+        return self.bottom - self.top
+
+    @property
+    def topleft(self):
+        return Point(self.left, self.top)
+
+    @property
+    def bottomleft(self):
+        return Point(self.left, self.bottom)
+
+    @property
+    def topright(self):
+        return Point(self.right, self.top)
+
+    @property
+    def bottomright(self):
+        return Point(self.right, self.bottom)
     
-@classmethod
-def from_points(cls, points):
-    if not isinstance(points, (list, tuple)) or len(points) != 3:
-        raise ValueError("Element musi być listą lub krotką zawierającą trzy punkty")
-
-    p1, p2, p3 = points
-
-    if not all(isinstance(p, Point) for p in (p1, p2, p3)):
-        raise ValueError("Elementy muszą być obiektami Point")
-
-    return cls(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y)
+    @property
+    def bounding_box(self):
+            return (self.right, self.bottom, self.left, self.top)
 
         
 
