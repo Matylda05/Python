@@ -1,17 +1,25 @@
 import tkinter as tk
-import random
+from random import *
 
 root = tk.Tk()
 root.title("Rzut Kostką")
-root.geometry("1500x900")
+root.geometry("900x500")
+root.configure(bg="#d4f1f9")
 
-kostka = random(6)
-label = tk.Label(root, text=kostka)
-label.pack(pady=10)
+label = tk.Label(root, text=" ",
+                font=("Times New Roman", 100, "bold"), 
+                bg="#d4f1f9")
+label.pack(pady=50)
 
 
-button = tk.Button(root, text="Rzuć kością")
-button.pack()
-
+button = tk.Button(root,
+                   text="Rzuć kością",
+                   font=("Times New Roman", 30, "bold"),
+                   bg="#9ae2f5",
+                   fg="black",
+                   activebackground="#0590b5",
+                   activeforeground="black",
+                   command=lambda: label.config(text=randrange(1, 7)))
+button.pack(pady=50)
 
 root.mainloop()
