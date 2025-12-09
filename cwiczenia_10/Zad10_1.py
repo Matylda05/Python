@@ -2,7 +2,6 @@ import tkinter as tk
 from random import *
 
 root = tk.Tk()
-root.title("Rzut Kostką")
 root.geometry("900x500")
 root.configure(bg="#d4f1f9")
 
