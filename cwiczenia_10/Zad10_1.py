@@ -6,10 +6,10 @@ root.title("Rzut Kostką")
 root.geometry("900x500")
 root.configure(bg="#d4f1f9")
 
-label = tk.Label(root, text=" ",
+kostka = tk.Label(root, text=" ",
                 font=("Times New Roman", 100, "bold"), 
                 bg="#d4f1f9")
-label.pack(pady=50)
+kostka.pack(pady=50)
 
 
 button = tk.Button(root,
@@ -19,7 +19,7 @@ button = tk.Button(root,
                    fg="black",
                    activebackground="#0590b5",
                    activeforeground="black",
-                   command=lambda: label.config(text=randrange(1, 7)))
+                   command=lambda: kostka.config(text=randrange(1, 7)))
 button.pack(pady=50)
 
 root.mainloop()
