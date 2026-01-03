@@ -1,33 +1,84 @@
 import tkinter as tk
-from random import *
+import slownik as sl
+
+def find(sequence):
+    result = []
+    for word in sl.slownik_words:
+        if len(word) != len(sequence):
+            continue
+
+        podobny = True
+        for num, litera in zip(sequence, word):
+            if num not in sl.t9 or litera not in sl.t9[num]:
+                podobny = False
+                break
+
+        if podobny:
+            result.append(word)
+
+    return result
 
 root = tk.Tk()
-root.geometry("900x500")
+root.geometry("1500x900")
 root.configure(bg="#d4f1f9")
 
 
-value_const = tk.StringVar(value="")
-value = tk.StringVar(value="")
+words = []  
+current_word = ""
+wyszukane_slowa = []
+wypisz_slownik = "Slownik: "
+pointer = 0
+
 
 text = tk.Label(
     root,
+    text = "|",
     font=("Times New Roman", 30),
     bg="#d4f1f9"
 )
-text.pack(pady=20)
-
-def refresh_label():
-    text.config(text=value_const.get() + value.get())
+text.grid(row=0, column=0, columnspan=2, pady=20)
 
 frame = tk.Frame(root)
-frame.pack(expand=True)
+frame.grid(row=1, column=0, padx=20, sticky="n")
+
+wypisny_slownik = tk.Label(
+    root,
+    text= wypisz_slownik,
+    font=("Times New Roman", 30),
+    bg="#d4f1f9"
+)
+wypisny_slownik.grid(row=1, column=1, sticky="nw")
+
+root.columnconfigure(0, weight=1)
+root.columnconfigure(1, weight=1)
+root.rowconfigure(0, weight=1)
+root.rowconfigure(1, weight=1)
+
+def refresh():
+    text.config(text="".join(words + [current_word])+ "|")
+def update_wybrane_slowo():
+    global wypisz_slownik
+    if not wyszukane_slowa:
+        wypisz_slownik = "Slownik: Brak słów"
+    else:
+        display = []
+        for i, word in enumerate(wyszukane_slowa):
+            if i == pointer:
+                display.append(f"[{word}]") 
+            else:
+                display.append(word)
+        wypisz_slownik = "Slownik: " + " , ".join(display)
+    
+    wypisny_slownik.config(text=wypisz_slownik)
+
 
 B_WIDTH = 6
 B_HEIGHT = 1
 
 def wpisz(x):
-    value.set(value.get() + x)
-    refresh_label()
+    global current_word
+    current_word += x
+    refresh()
 
 button1 = tk.Button(
                     frame,
@@ -147,9 +198,10 @@ button9 = tk.Button(
                     )
 
 def spacja():
-    value_const.set(value_const.get() + value.get() + " ")
-    value.set("")
-    refresh_label()
+    global current_word
+    words.append(current_word + " ")
+    current_word = ""
+    refresh()
 
 button_s = tk.Button(
                     frame,
@@ -177,13 +229,14 @@ button0 = tk.Button(
                     )
 
 def backspace():
-    if value.get() == "":
-        value_const.set(value_const.get()[:-1])
-        refresh_label()
-    else:
-        value.set(value.get()[:-1])
-        refresh_label()
+    global current_word  #musi być global aby możnało to modyfikować/nadpisywać
 
+    if current_word:
+        current_word = current_word[:-1]
+    elif words:
+        current_word = words.pop()
+        
+    refresh()
 
 button_b = tk.Button(
                     frame,
@@ -198,6 +251,97 @@ button_b = tk.Button(
                     command=lambda: backspace()
                     )
 
+def left():
+    global pointer
+    if not wyszukane_slowa:
+        return
+    
+    if pointer == 0:
+        pointer = len(wyszukane_slowa) - 1
+    else:
+        pointer = pointer-1
+    update_wybrane_slowo()
+
+button_left= tk.Button(
+                    frame,
+                    text="<",
+                    font=("Times New Roman", 30, "bold"),
+                    bg="#9ae2f5",
+                    fg="black",
+                    activebackground="#0590b5",
+                    activeforeground="black",
+                    width=3,
+                    height=B_HEIGHT,
+                    command=lambda: left()
+                    )
+
+def wybierz():
+    global current_word, wyszukane_slowa
+    if not wyszukane_slowa:
+        return
+    
+    current_word = wyszukane_slowa[pointer]
+    words.append(current_word)
+    current_word = ""
+    wyszukane_slowa = []
+    refresh()
+    update_wybrane_slowo()
+
+button_wybierz= tk.Button(
+                    frame,
+                    text="wybierz",
+                    font=("Times New Roman", 30, "bold"),
+                    bg="#9ae2f5",
+                    fg="black",
+                    activebackground="#0590b5",
+                    activeforeground="black",
+                    width=B_WIDTH,
+                    height=B_HEIGHT,
+                    command=lambda: wybierz()
+                    )
+
+def right():
+    global pointer
+    if not wyszukane_slowa:
+        return
+    
+    if pointer == len(wyszukane_slowa)-1:
+        pointer = 0
+    else:
+        pointer = pointer+1
+    update_wybrane_slowo()
+
+button_right= tk.Button(
+                    frame,
+                    text=">",
+                    font=("Times New Roman", 30, "bold"),
+                    bg="#9ae2f5",
+                    fg="black",
+                    activebackground="#0590b5",
+                    activeforeground="black",
+                    width=3,
+                    height=B_HEIGHT,
+                    command=lambda: right()
+                    )
+
+def predict():
+    global wypisz_slownik, wyszukane_slowa, pointer
+    seq = current_word
+    wyszukane_slowa = find(seq)
+    pointer = 0
+    update_wybrane_slowo()
+
+button_T9= tk.Button(
+                    frame,
+                    text="wyszukaj slowo",
+                    font=("Times New Roman", 30, "bold"),
+                    bg="#9ae2f5",
+                    fg="black",
+                    activebackground="#0590b5",
+                    activeforeground="black",
+                    height=B_HEIGHT,
+                    command=lambda: predict()
+                    )
 
 button1.grid(row=1, column=0, padx=5, pady=5)
 button2.grid(row=1, column=1, padx=5, pady=5)
@@ -211,5 +355,11 @@ button9.grid(row=3, column=2, padx=5, pady=5)
 button_s.grid(row=4, column=0, padx=5, pady=5)
 button0.grid(row=4, column=1, padx=5, pady=5)
 button_b.grid(row=4, column=2, padx=5, pady=5)
+
+button_T9.grid(row=5, column=0, columnspan=3, padx=5, pady=5)
+
+button_left.grid(row=6, column=0, padx=5, pady=5)
+button_wybierz.grid(row=6, column=1, padx=5, pady=5)
+button_right.grid(row=6, column=2, padx=5, pady=5)
 
 root.mainloop()
