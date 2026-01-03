@@ -19,4 +19,5 @@ PATH = os.path.join(BASE_DIR, "slownik_plik.txt")
 with open(PATH, encoding="utf-8") as f:
     slownik_words = [w.strip().lower() for w in f if w.strip()]
 
-
+#https://apiacoa.org/publications/teaching/datasets/google-10000-english.txt
+ 
