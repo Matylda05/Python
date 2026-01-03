@@ -28,6 +28,7 @@ current_word = ""
 wyszukane_slowa = []
 wypisz_slownik = "Slownik: "
 pointer = 0
+cursor_visible = True
 
 
 text = tk.Label(
@@ -55,7 +56,10 @@ root.rowconfigure(0, weight=1)
 root.rowconfigure(1, weight=1)
 
 def refresh():
-    text.config(text="".join(words + [current_word])+ "|")
+    if cursor_visible:
+        text.config(text="".join(words + [current_word]) + "|")
+    else:
+        text.config(text="".join(words + [current_word]) + " ")
 def update_wybrane_slowo():
     global wypisz_slownik
     if not wyszukane_slowa:
@@ -82,7 +86,7 @@ def wpisz(x):
 
 button1 = tk.Button(
                     frame,
-                    text="1",
+                    text="1 sym",
                     font=("Times New Roman", 30, "bold"),
                     bg="#9ae2f5",
                     fg="black",
@@ -361,5 +365,14 @@ button_T9.grid(row=5, column=0, columnspan=3, padx=5, pady=5)
 button_left.grid(row=6, column=0, padx=5, pady=5)
 button_wybierz.grid(row=6, column=1, padx=5, pady=5)
 button_right.grid(row=6, column=2, padx=5, pady=5)
+
+
+def blink_cursor():
+    global cursor_visible
+    cursor_visible = not cursor_visible
+    refresh()
+    root.after(500, blink_cursor)
+
+blink_cursor()
 
 root.mainloop()
