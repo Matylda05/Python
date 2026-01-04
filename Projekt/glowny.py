@@ -63,18 +63,19 @@ def refresh():
         text.config(text="".join(words + [current_word]) + "|")
     else:
         text.config(text="".join(words + [current_word]) + " ")
+
 def update_wybrane_slowo():
     global wypisz_slownik
     if not wyszukane_slowa:
-        wypisz_slownik = "Slownik: Brak słów"
+        wypisz_slownik = "Slownik: Brak slow"
     else:
-        display = []
+        tab = []
         for i, word in enumerate(wyszukane_slowa):
             if i == pointer:
-                display.append(f"[{word}]") 
+                tab.append(f"[{word}]") 
             else:
-                display.append(word)
-        wypisz_slownik = "Slownik: " + " , ".join(display)
+                tab.append(word)
+        wypisz_slownik = "Slownik: " + " , ".join(tab)
     
     wypisny_slownik.config(text=wypisz_slownik)
 
@@ -90,7 +91,7 @@ def spacja():
     refresh()
 
 def backspace():
-    global current_word  #musi być global aby możnało to modyfikować/nadpisywać
+    global current_word 
 
     if current_word:
         current_word = current_word[:-1]
@@ -135,8 +136,7 @@ def right():
 
 def predict():
     global wypisz_slownik, wyszukane_slowa, pointer
-    seq = current_word
-    wyszukane_slowa = find(seq)
+    wyszukane_slowa = find(current_word)
     pointer = 0
     update_wybrane_slowo()
 
@@ -304,7 +304,7 @@ button_b = tk.Button(
 
 button_left= tk.Button(
                     frame,
-                    text="<",
+                    text="\u2190",
                     font=("Times New Roman", 30, "bold"),
                     bg="#9ae2f5",
                     fg="black",
@@ -330,7 +330,7 @@ button_wybierz= tk.Button(
 
 button_right= tk.Button(
                     frame,
-                    text=">",
+                    text="\u2192",
                     font=("Times New Roman", 30, "bold"),
                     bg="#9ae2f5",
                     fg="black",
