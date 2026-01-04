@@ -23,5 +23,3 @@ with open(PATH, encoding="utf-8") as f:  #with gwarantuje zamknięcie pliku ayto
         if w:
             slownik_words.append(w.lower())
 
-#https://apiacoa.org/publications/teaching/datasets/google-10000-english.txt
- 
