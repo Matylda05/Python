@@ -239,6 +239,7 @@ def backspace():
         current_word = current_word[:-1]
     elif words:
         current_word = words.pop()
+        current_word = current_word[:-1]
         
     refresh()
 
@@ -366,7 +367,6 @@ button_left.grid(row=6, column=0, padx=5, pady=5)
 button_wybierz.grid(row=6, column=1, padx=5, pady=5)
 button_right.grid(row=6, column=2, padx=5, pady=5)
 
-
 def blink_cursor():
     global cursor_visible
     cursor_visible = not cursor_visible
@@ -374,5 +374,6 @@ def blink_cursor():
     root.after(500, blink_cursor)
 
 blink_cursor()
+
 
 root.mainloop()
