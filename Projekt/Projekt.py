@@ -30,6 +30,9 @@ wypisz_slownik = "Slownik: "
 pointer = 0
 cursor_visible = True
 
+B_WIDTH = 6
+B_HEIGHT = 1
+
 
 text = tk.Label(
     root,
@@ -75,14 +78,75 @@ def update_wybrane_slowo():
     
     wypisny_slownik.config(text=wypisz_slownik)
 
-
-B_WIDTH = 6
-B_HEIGHT = 1
-
 def wpisz(x):
     global current_word
     current_word += x
     refresh()
+
+def spacja():
+    global current_word
+    words.append(current_word + " ")
+    current_word = ""
+    refresh()
+
+def backspace():
+    global current_word  #musi być global aby możnało to modyfikować/nadpisywać
+
+    if current_word:
+        current_word = current_word[:-1]
+    elif words:
+        current_word = words.pop()
+        current_word = current_word[:-1]
+        
+    refresh()
+
+def left():
+    global pointer
+    if not wyszukane_slowa:
+        return
+    
+    if pointer == 0:
+        pointer = len(wyszukane_slowa) - 1
+    else:
+        pointer = pointer-1
+    update_wybrane_slowo()
+
+def wybierz():
+    global current_word, wyszukane_slowa
+    if not wyszukane_slowa:
+        return
+    
+    current_word = wyszukane_slowa[pointer]
+    words.append(current_word)
+    current_word = ""
+    wyszukane_slowa = []
+    refresh()
+    update_wybrane_slowo()
+
+def right():
+    global pointer
+    if not wyszukane_slowa:
+        return
+    
+    if pointer == len(wyszukane_slowa)-1:
+        pointer = 0
+    else:
+        pointer = pointer+1
+    update_wybrane_slowo()
+
+def predict():
+    global wypisz_slownik, wyszukane_slowa, pointer
+    seq = current_word
+    wyszukane_slowa = find(seq)
+    pointer = 0
+    update_wybrane_slowo()
+
+def blink_cursor():
+    global cursor_visible
+    cursor_visible = not cursor_visible
+    refresh()
+    root.after(500, blink_cursor)
+
 
 button1 = tk.Button(
                     frame,
@@ -201,12 +265,6 @@ button9 = tk.Button(
                     command=lambda: wpisz("9")
                     )
 
-def spacja():
-    global current_word
-    words.append(current_word + " ")
-    current_word = ""
-    refresh()
-
 button_s = tk.Button(
                     frame,
                     text="_",
@@ -232,17 +290,6 @@ button0 = tk.Button(
                     command=lambda: wpisz("0")
                     )
 
-def backspace():
-    global current_word  #musi być global aby możnało to modyfikować/nadpisywać
-
-    if current_word:
-        current_word = current_word[:-1]
-    elif words:
-        current_word = words.pop()
-        current_word = current_word[:-1]
-        
-    refresh()
-
 button_b = tk.Button(
                     frame,
                     text="<",
@@ -255,17 +302,6 @@ button_b = tk.Button(
                     height=B_HEIGHT,
                     command=lambda: backspace()
                     )
-
-def left():
-    global pointer
-    if not wyszukane_slowa:
-        return
-    
-    if pointer == 0:
-        pointer = len(wyszukane_slowa) - 1
-    else:
-        pointer = pointer-1
-    update_wybrane_slowo()
 
 button_left= tk.Button(
                     frame,
@@ -280,18 +316,6 @@ button_left= tk.Button(
                     command=lambda: left()
                     )
 
-def wybierz():
-    global current_word, wyszukane_slowa
-    if not wyszukane_slowa:
-        return
-    
-    current_word = wyszukane_slowa[pointer]
-    words.append(current_word)
-    current_word = ""
-    wyszukane_slowa = []
-    refresh()
-    update_wybrane_slowo()
-
 button_wybierz= tk.Button(
                     frame,
                     text="wybierz",
@@ -305,17 +329,6 @@ button_wybierz= tk.Button(
                     command=lambda: wybierz()
                     )
 
-def right():
-    global pointer
-    if not wyszukane_slowa:
-        return
-    
-    if pointer == len(wyszukane_slowa)-1:
-        pointer = 0
-    else:
-        pointer = pointer+1
-    update_wybrane_slowo()
-
 button_right= tk.Button(
                     frame,
                     text=">",
@@ -328,13 +341,6 @@ button_right= tk.Button(
                     height=B_HEIGHT,
                     command=lambda: right()
                     )
-
-def predict():
-    global wypisz_slownik, wyszukane_slowa, pointer
-    seq = current_word
-    wyszukane_slowa = find(seq)
-    pointer = 0
-    update_wybrane_slowo()
 
 button_T9= tk.Button(
                     frame,
@@ -367,13 +373,7 @@ button_left.grid(row=6, column=0, padx=5, pady=5)
 button_wybierz.grid(row=6, column=1, padx=5, pady=5)
 button_right.grid(row=6, column=2, padx=5, pady=5)
 
-def blink_cursor():
-    global cursor_visible
-    cursor_visible = not cursor_visible
-    refresh()
-    root.after(500, blink_cursor)
 
 blink_cursor()
-
 
 root.mainloop()
