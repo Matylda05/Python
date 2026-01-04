@@ -11,13 +11,17 @@ t9 = {
     "8": "tuv",
     "9": "wxyz"
 }
+slownik_words = []
 
 BASE_DIR = os.path.dirname(__file__)
 PATH = os.path.join(BASE_DIR, "slownik_plik.txt")
 #tworzy sciezke do pliku
 
-with open(PATH, encoding="utf-8") as f:
-    slownik_words = [w.strip().lower() for w in f if w.strip()]
+with open(PATH, encoding="utf-8") as f:  #with gwarantuje zamknięcie pliku aytomatyczne
+    for w in f:
+        w = w.strip()
+        if w:
+            slownik_words.append(w.lower())
 
 #https://apiacoa.org/publications/teaching/datasets/google-10000-english.txt
  
