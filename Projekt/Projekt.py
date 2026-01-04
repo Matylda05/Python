@@ -96,8 +96,7 @@ def backspace():
         current_word = current_word[:-1]
     elif words:
         current_word = words.pop()
-        current_word = current_word[:-1]
-        
+        current_word = current_word[:-1] 
     refresh()
 
 def left():
