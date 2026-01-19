@@ -353,6 +353,30 @@ button_T9= tk.Button(
                     command=lambda: predict()
                     )
 
+button_g = tk.Button(
+                    frame,
+                    text="*",
+                    font=("Times New Roman", 30, "bold"),
+                    bg="#9ae2f5",
+                    fg="black",
+                    activebackground="#0590b5",
+                    activeforeground="black",
+                    width=B_WIDTH,
+                    height=B_HEIGHT,
+                    command=lambda: wpisz("*"))
+
+button_h = tk.Button(
+                    frame,
+                    text="#",
+                    font=("Times New Roman", 30, "bold"),
+                    bg="#9ae2f5",
+                    fg="black",
+                    activebackground="#0590b5",
+                    activeforeground="black",
+                    width=B_WIDTH,
+                    height=B_HEIGHT,
+                    command=lambda: wpisz("#"))
+
 button1.grid(row=1, column=0, padx=5, pady=5)
 button2.grid(row=1, column=1, padx=5, pady=5)
 button3.grid(row=1, column=2, padx=5, pady=5)
@@ -362,15 +386,18 @@ button6.grid(row=2, column=2, padx=5, pady=5)
 button7.grid(row=3, column=0, padx=5, pady=5)
 button8.grid(row=3, column=1, padx=5, pady=5)
 button9.grid(row=3, column=2, padx=5, pady=5)
-button_s.grid(row=4, column=0, padx=5, pady=5)
+button_g.grid(row=4, column=0, padx=5, pady=5)
 button0.grid(row=4, column=1, padx=5, pady=5)
-button_b.grid(row=4, column=2, padx=5, pady=5)
+button_h.grid(row=4, column=2, padx=5, pady=5)
 
-button_T9.grid(row=5, column=0, columnspan=3, padx=5, pady=5)
+button_s.grid(row=5, column=1, padx=5, pady=5)
+button_b.grid(row=5, column=2, padx=5, pady=5)
 
-button_left.grid(row=6, column=0, padx=5, pady=5)
-button_wybierz.grid(row=6, column=1, padx=5, pady=5)
-button_right.grid(row=6, column=2, padx=5, pady=5)
+button_T9.grid(row=6, column=0, columnspan=3, padx=5, pady=5)
+
+button_left.grid(row=7, column=0, padx=5, pady=5)
+button_wybierz.grid(row=7, column=1, padx=5, pady=5)
+button_right.grid(row=7, column=2, padx=5, pady=5)
 
 
 blink_cursor()
