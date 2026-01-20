@@ -3,19 +3,16 @@ import slownik as sl
 
 def find(sequence):
     result = []
-    for word in sl.slownik_words:
-        if len(word) != len(sequence):
-            continue
+    for word in sl.slownik_words.get(len(sequence), []):
 
-        podobny = True
+        podobny=True
         for num, litera in zip(sequence, word):
             if num not in sl.t9 or litera not in sl.t9[num]:
-                podobny = False
+                podobny=False
                 break
 
         if podobny:
             result.append(word)
-
     return result
 
 root = tk.Tk()

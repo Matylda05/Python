@@ -1,4 +1,5 @@
 import os
+from collections import defaultdict
 
 t9 = {
     "1": ".,?!'\"-_@$%&",
@@ -11,7 +12,7 @@ t9 = {
     "8": "tuv",
     "9": "wxyz"
 }
-slownik_words = []
+slownik_words = defaultdict(list)
 
 BASE_DIR = os.path.dirname(__file__)
 PATH = os.path.join(BASE_DIR, "slownik_plik.txt")
@@ -21,5 +22,5 @@ with open(PATH, encoding="utf-8") as f:  #with gwarantuje zamknięcie pliku ayto
     for w in f:
         w = w.strip()
         if w:
-            slownik_words.append(w.lower())
+            slownik_words[len(w)].append(w)
 
