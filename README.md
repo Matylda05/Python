@@ -26,8 +26,6 @@ Pełna dokumentacja projektu, zawierająca opis zastosowanych algorytmów oraz i
 
 `T9_Predictive_Text_System/Opis_projektu_python.pdf` 
 
-[Dokumentacja projektu (PDF)](./T9_Predictive_Text_System/Opis_projektu_python.pdf)
-
 ---
 
 ## Struktura repozytorium
