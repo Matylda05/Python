@@ -24,7 +24,8 @@ Aplikacja desktopowa stworzona w Pythonie, która symuluje działanie systemu T9
 
 Pełna dokumentacja projektu, zawierająca opis zastosowanych algorytmów oraz implementacji funkcji, dostępna jest w pliku:
 
-`T9_Predictive_Text_System/Opis_projektu_python.pdf` \\
+`T9_Predictive_Text_System/Opis_projektu_python.pdf` 
+
 [Dokumentacja projektu (PDF)](./T9_Predictive_Text_System/Opis_projektu_python.pdf)
 
 ---
